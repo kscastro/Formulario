@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">tp3</string>
+    <string name="string_titleform">Adicionar Contato</string>
+    <string name="string_name">Nome</string>
+    <string name="string_senha">Senha</string>
+    <string name="string_tel">Telefone</string>
+    <string name="string_celular">Celular</string>
+    <string name="string_cpf">CPF</string>
+    <string name="string_email">Email</string>
+    <string name="string_address">Cidade</string>
+    <string name="string_save">Salvar</string>
+    <string name="string_clean">Limpar</string>
+</resources>
