@@ -52,6 +52,7 @@ public class ListActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,arrayNome);
         Contacts.setAdapter(adapter);
 
+
         Contacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -72,6 +73,7 @@ public class ListActivity extends AppCompatActivity {
                 for(DataSnapshot objSnapshot:dataSnapshot.getChildren()){
                     Pessoa p = objSnapshot.getValue(Pessoa.class);
                     arrayNome.add(p.getNome());
+
 
 
 

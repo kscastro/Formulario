@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -51,28 +52,66 @@ public class MainActivity extends AppCompatActivity {
         b1=(Button)findViewById(R.id.btnSave);
         b2=(Button)findViewById(R.id.btnClean);
         btnList = (Button)findViewById(R.id.btnList);
+        CPF.addTextChangedListener(Mask.insert("###.###.###-##", CPF));
 
 
     inicilizarFirebase();
-
-
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Pessoa p = new Pessoa();
-                p.setUid(UUID.randomUUID().toString());
-                p.setNome(Name.getText().toString());
-                p.setEmail(Email.getText().toString());
-                p.setSenha(Senha.getText().toString());
-                p.setTelefone(Telefone.getText().toString());
-                p.setCelular(Celular.getText().toString());
-                p.setCpf(CPF.getText().toString());
-                p.setCidade(Cidade.getText().toString());
-                databaseReference.child("Pessoa").child(p.getUid()).setValue(p);
 
 
+                //Valida se os campos não estão vazios
+                Validator.validateNotNull(Name,"Preencha o campo nome");
+                Validator.validateNotNull(Senha,"Preencha o campo senha");
+                Validator.validateNotNull(Email,"Preencha o campo E-mail");
+                Validator.validateNotNull(Telefone,"Preencha o campo Telefone");
+                Validator.validateNotNull(Celular,"Preencha o campo celular");
+                Validator.validateNotNull(CPF,"Preencha o campo CPF");
+                Validator.validateNotNull(Cidade,"Preencha o campo Cidade");
+
+                int isTrue = 1;
+
+                //Validação do CPF
+                boolean cpf_valido = Validator.validateCPF(CPF.getText().toString());
+                if(!cpf_valido){
+                    CPF.setError("CPF inválido");
+                    CPF.setFocusable(true);
+                    CPF.requestFocus();
+
+                    isTrue = 0;
+                }
+                //Validação do E-mail
+                boolean email_valido = Validator.validateEmail(Email.getText().toString());
+                if(!email_valido){
+                    Email.setError("Email inválido");
+                    Email.setFocusable(true);
+                    Email.requestFocus();
+                    isTrue = 0;
+                }
+                //Salva as Informações no TXT
+                if(isTrue ==1){
+                    try {
+                        Pessoa p = new Pessoa();
+                        p.setUid(UUID.randomUUID().toString());
+                        p.setNome(Name.getText().toString());
+                        p.setEmail(Email.getText().toString());
+                        p.setSenha(Senha.getText().toString());
+                        p.setTelefone(Telefone.getText().toString());
+                        p.setCelular(Celular.getText().toString());
+                        p.setCpf(CPF.getText().toString());
+                        p.setCidade(Cidade.getText().toString());
+                        databaseReference.child("Pessoa").child(p.getUid()).setValue(p);
+                    }
+                    // a == b
+
+                    catch (Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
 
             }
         });
