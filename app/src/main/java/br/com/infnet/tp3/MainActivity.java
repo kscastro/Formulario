@@ -5,13 +5,24 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import br.com.infnet.tp3.ListActivity;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import br.com.infnet.tp3.Model.Pessoa;
@@ -21,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     EditText Name,Senha,Email,Telefone,Celular,CPF,Cidade;
     Button b1,b2;
     Button   btnList;
-
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
@@ -39,10 +49,13 @@ public class MainActivity extends AppCompatActivity {
         CPF = (EditText)findViewById(R.id.edtCPF);
         Cidade = (EditText)findViewById(R.id.edtCidade);
         b1=(Button)findViewById(R.id.btnSave);
+        b2=(Button)findViewById(R.id.btnClean);
         btnList = (Button)findViewById(R.id.btnList);
 
 
     inicilizarFirebase();
+
+
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 p.setCpf(CPF.getText().toString());
                 p.setCidade(Cidade.getText().toString());
                 databaseReference.child("Pessoa").child(p.getUid()).setValue(p);
-                limparCampos();
+
 
 
             }
@@ -72,14 +85,19 @@ public class MainActivity extends AppCompatActivity {
                 Intent toListView = new Intent (context, ListActivity.class);
                 startActivity(toListView);
 
+
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                limparCampos();
             }
         });
 
 
 
     }
-
-
 
 
     private void limparCampos() {
@@ -95,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
     private void inicilizarFirebase() {
         FirebaseApp.initializeApp(MainActivity.this);
         firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.setPersistenceEnabled(true);
         databaseReference = firebaseDatabase.getReference();
     }
 }

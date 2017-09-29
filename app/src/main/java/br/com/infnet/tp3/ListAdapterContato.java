@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.infnet.tp3.Model.Pessoa;
 
@@ -20,11 +21,11 @@ public class ListAdapterContato extends ArrayAdapter {
     private Context context;
     private ArrayList<Pessoa> lista;
 
-    public ListAdapterContato(Context context, ArrayList<Pessoa> lista){
+    public ListAdapterContato(Context context, List<Pessoa> lista){
         super(context, 0, lista);
 
         this.context = context;
-        this.lista = lista;
+        this.lista = (ArrayList<Pessoa>) lista;
     }
 
     @Override

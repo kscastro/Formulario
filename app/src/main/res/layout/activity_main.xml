@@ -141,12 +141,12 @@
                 android:layout_width="115dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Save" />
+                android:text="Salvar" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="load"
+                android:text="Limpar"
                 android:id="@+id/btnClean"
                 android:layout_gravity="center_horizontal"
                 />
